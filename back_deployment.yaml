@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu_back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: menu_back
+  template:
+    metadata:
+      labels:
+        app: menu_back
+    spec:
+      containers:
+      - name: menu_back
+        image: blackbo6/menu_back:latest
+        ports:
+          - containerPort: 4000
+        env:
+          - name: MONGO_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_USERNAME
+                name: mongo-secret
+          - name: MONGO_PWD
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_PWD
+                name: mongo-secret
+          - name: MONGO_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: MONGO_PORT
+                name: configMap-app
+          - name: MONGO_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: MONGO_HOST
+                name: configMap-app
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  menu_back_service
+spec:
+  selector:
+    app:  menu_back
+  type:  ClusterIP
+  ports:
+  - protocol: TCP
+    port:  4000
+    targetPort:  4000
+    

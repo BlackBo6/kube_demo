@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu_front
+spec:
+  selector:
+    matchLabels:
+      app: menu_front
+  template:
+    metadata:
+      labels:
+        app: menu_front
+    spec:
+      containers:
+      - name: menu_front
+        image: blackbo6/menu_front:latest
+        ports:
+        - containerPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  menu_front_service
+spec:
+  selector:
+    app:  menu_front
+  type:  ClusterIP 
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
