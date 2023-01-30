@@ -32,12 +32,12 @@ spec:
             valueFrom:
               configMapKeyRef:
                 key: MONGO_PORT
-                name: configMap-app
+                name: configmap-app
           - name: MONGO_HOST
             valueFrom:
               configMapKeyRef:
                 key: MONGO_HOST
-                name: configMap-app
+                name: configmap-app
 
 ---
 kind: Service
