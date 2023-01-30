@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: <Host>
+  - host: 18.209.241.10
     http:
       paths:
         backend:
